@@ -2,21 +2,26 @@
 -----------------------------------------------------------------
 OfBUsage.ps1
 Get a statistic of the current usage of 
-OneDrive for Business in your configured tenant
-and write the result to an CSV file.
-This script reads all SPO user profiles. 
+OneDrive for Business ofyour configured tenant
+and write the result to an CSV file
+for further reporting (for example with Excel and Pivot).
+This script reads all existing SPO user profiles first. 
+
 OfBUsage made by 
 Christoph Wilfing, Martina Grom, Toni Pohl (atwork.at)
-version 1.0 (2016-01-14), based on the idea of
+version 1.0 (2016-01-14)
+
+Based on the idea of
 https://technet.microsoft.com/en-us/library/dn911464.aspx
 but optimized and combined with querying the OfB services
 for each user who has a provisioned OfB.
+
 Prerequesits: Install SharePoint Online Management Shell
 from https://www.microsoft.com/en-us/download/details.aspx?id=35588
 -----------------------------------------------------------------
 #>
 #----------------------------------------------------------------
-# Configure your values here:
+# Configure your own values here:
 # Specifies the URL for your organization's SPO admin service
 $AdminURI = "https://<yourtenant>-admin.sharepoint.com"
 # Specifies the URL for the personal SPO site
