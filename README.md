@@ -1,2 +1,2 @@
 # office365scripts
-Some helpful PowerShell scripts for administering Office 365
+Some helpful PowerShell scripts for administering Office 365. This repository will be extended from time to time with small PowerShell scripts for automating differents tasks in Microsoft Office 365...
