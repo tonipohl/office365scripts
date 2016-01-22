@@ -1,4 +1,4 @@
-<#  
+<#
 -----------------------------------------------------------------
 OfBUsage.ps1
 Get a statistic of the current usage of 
