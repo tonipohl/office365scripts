@@ -2,7 +2,7 @@
 -----------------------------------------------------------------
 OfBUsage.ps1
 Get a statistic of the current usage of 
-OneDrive for Business ofyour configured tenant
+OneDrive for Business of your configured tenant
 and write the result to an CSV file
 for further reporting (for example with Excel and Pivot).
 This script reads all existing SPO user profiles first. 
