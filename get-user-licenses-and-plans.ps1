@@ -1,20 +1,12 @@
 # ----------------------------------------------------------
 # get-user-licenses-and-plans.ps1
-# Get all users of a Office 365 tenant and all assigned licenses and plans.
-# One plan assignment is in one column.
-# based on these articles & script by Alan Byrne:
+# Get all users of an Office 365 tenant and all assigned licenses and plans. One plan assignment is in one column.
+# This script is based on this script by Alan Byrne:
 # Source: https://gallery.technet.microsoft.com/scriptcenter/Export-a-Licence-b200ca2a
-# Article: https://mymicrosoftexchange.wordpress.com/2015/03/23/office-365-script-to-get-detailed-report-of-assigned-licenses/
-# modified by TP, atwork.at, 16.09.2016
+# modified by Toni Pohl, atwork.at, 16.09.2016
 # ----------------------------------------------------------
 # https://technet.microsoft.com/en-us/library/dn771773.aspx
 # Get the license informations: Connect-MsolService and authenticate then use Get-MsolAccountSku
-# Get-MsolAccountSku | Select-Object *
-#
-# AccountSkuId                  ActiveUnits WarningUnits ConsumedUnits
-# ------------                  ----------- ------------ -------------
-# pfoten:ENTERPRISEPACK_FACULTY 360         0            343          
-# $license = "pfoten:ENTERPRISEPACK_FACULTY"
 # Use the commands Get-MsolAccountSku and (Get-MsolAccountSku | where {$_.AccountSkuId -eq '<AccountSkuId>'}).ServiceStatus to find the following information:
 # The licensing plans that are available in your organization.
 # (Get-MsolAccountSku | where {$_.AccountSkuId -eq $license}).ServiceStatus
@@ -25,7 +17,7 @@ $LogFile = ".\Office-365-Licenses.csv"
 # Connect to Microsoft Online - if necessary...
 # Import-Module MSOnline
 # Connect-MsolService -Credential $Office365credentials
-# write-host "Connecting to Office 365..."
+# Write-Host "Connecting to Office 365..."
 
 # Get a list of all licences that exist within the tenant
 $licensetype = Get-MsolAccountSku | Where {$_.ConsumedUnits -ge 1}
@@ -90,3 +82,4 @@ if (1 -eq 1) {
 }
 
 write-host ("Done. Check " + $LogFile)
+# Now work with the CSV in Excel... happy reporting!
