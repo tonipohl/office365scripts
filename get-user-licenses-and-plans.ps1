@@ -2,10 +2,10 @@
 # get-user-licenses-and-plans.ps1
 # Get all users of a Office 365 tenant and all assigned licenses and plans.
 # One plan assignment is in one column.
-# based on these articles & script:
+# based on these articles & script by Alan Byrne:
 # Source: https://gallery.technet.microsoft.com/scriptcenter/Export-a-Licence-b200ca2a
-# article. https://mymicrosoftexchange.wordpress.com/2015/03/23/office-365-script-to-get-detailed-report-of-assigned-licenses/
-# TP, 16.09.2016
+# Article: https://mymicrosoftexchange.wordpress.com/2015/03/23/office-365-script-to-get-detailed-report-of-assigned-licenses/
+# modified by TP, atwork.at, 16.09.2016
 # ----------------------------------------------------------
 # https://technet.microsoft.com/en-us/library/dn771773.aspx
 # Get the license informations: Connect-MsolService and authenticate then use Get-MsolAccountSku
@@ -20,9 +20,9 @@
 # (Get-MsolAccountSku | where {$_.AccountSkuId -eq $license}).ServiceStatus
 
 # The Output will be written to this file in the current working directory
-$LogFile = ".\Office_365_Licenses-overview3.csv"
+$LogFile = ".\Office-365-Licenses.csv"
 
-# Connect to Microsoft Online
+# Connect to Microsoft Online - if necessary...
 # Import-Module MSOnline
 # Connect-MsolService -Credential $Office365credentials
 # write-host "Connecting to Office 365..."
@@ -48,12 +48,12 @@ foreach ($license in $licensetype)
 	write-host ("Gathering users with the following subscription: " + $license.accountskuid)
 
 	# Gather users for this particular AccountSku
-	#$users = Get-MsolUser -all | where {$_.isLicensed -eq "True" -and $_.licenses.accountskuid -contains $license.accountskuid}
+	# $users = Get-MsolUser -all | where {$_.isLicensed -eq "True" -and $_.licenses.accountskuid -contains $license.accountskuid}
     $users = Get-MsolUser -all | where {$_.licenses.accountskuid -contains $license.accountskuid}
 
 	# Loop through all users and write them to the CSV file
 	foreach ($user in $users) {
-		
+		# Fix displayname for correct output in CSV...
         $dn = $($user.displayname).Replace(","," ")
 	    write-host ("$i. $dn")
         $i++
@@ -62,7 +62,7 @@ foreach ($license in $licensetype)
 		$datastring = ($dn + "," + $user.userprincipalname + "," + $license.SkuPartNumber)
 		
 		foreach ($row in $($thislicense.servicestatus)) {
-			# Build data string: PendingActivation, Disabled, Success
+			# Build data string: PendingActivation, Disabled, Success - we want to sum in Excel, so we use 0 and 1...
             $st = $row.provisioningstatus
             if ($st -eq "PendingActivation") {$st = '1'}
             if ($st -eq "Success") {$st = '1'}
@@ -74,8 +74,8 @@ foreach ($license in $licensetype)
 	}
 }			
 
+# added: users without license. Use this block or not...
 if (1 -eq 1) {
-    # added: users without license
     $users = Get-MsolUser -all | where {$_.isLicensed -ne "True"}
     foreach ($user in $users) {
 		
@@ -88,6 +88,5 @@ if (1 -eq 1) {
 	    Out-File -FilePath $LogFile -InputObject $datastring -Encoding UTF8 -append
     }
 }
-#Out-File -FilePath $LogFile -InputObject " " -Encoding UTF8 -append
 
 write-host ("Done. Check " + $LogFile)
