@@ -13,6 +13,7 @@
 
 # The Output will be written to this file in the current working directory
 $LogFile = ".\Office-365-Licenses.csv"
+Out-File -FilePath $LogFile -InputObject '' -Encoding UTF8
 
 # Connect to Microsoft Online - if necessary... if you rerun the code, comment after first login to speed up
 Connect-MsolService
@@ -33,7 +34,7 @@ foreach ($license in $licensetype)
 		$headerstring = ($headerstring + "," + $row.ServicePlan.servicename)
 	}
 
-	Out-File -FilePath $LogFile -InputObject $headerstring -Encoding UTF8
+	Out-File -FilePath $LogFile -InputObject $headerstring -Encoding UTF8 -append
 
 	# Now get the user licenses and plans
 	write-host ("Gathering users with the following subscription: " + $license.accountskuid)
@@ -56,6 +57,8 @@ foreach ($license in $licensetype)
 			# Build data string: PendingActivation, Disabled, Success - we want to sum in Excel, so we use 0 and 1...
 			$st = $row.provisioningstatus
 			if ($st -eq "PendingActivation") {$st = '1'}
+			if ($st -eq "PendingProvisioning") {$st = '1'}
+			if ($st -eq "PendingInput") {$st = '1'}			
 			if ($st -eq "Success") {$st = '1'}
 			if ($st -eq "Disabled") {$st = '0'}
 			$datastring = ($datastring + "," + $st)
