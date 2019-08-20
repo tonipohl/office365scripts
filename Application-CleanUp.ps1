@@ -77,11 +77,11 @@ $result = $result | Sort-Object { $_.EndDate -as [datetime] } -Descending
 Write-Output "Delete all old Apps '$appname' with Home URL $url..."
 $i = 0
 foreach ($a in $result) {
-    # Get one app
+    # Get one app and just let the first one alive, remove the rest.
     if ($i -gt 0) {
         $a.Deleted = $true
-        # If oyu want to remove the old app...
-        # Remove-AzADApplication -ObjectId $appitem.Id -Force
+        # If you want to remove the old app...
+        # Remove-AzADApplication -ObjectId $a.Id -Force
     }
     $a.Order = $i
     $i++
