@@ -1,6 +1,6 @@
 <#
 -----------------------------------------------------------------
-Application-CleanUp.ps1.ps1
+Application-CleanUp.ps1
 Script by atwork.at, Toni Pohl, 2019-08-20
 This script shows all applications of an Azure Active Directory
 filtered by app name and URL to remove "old" apps
