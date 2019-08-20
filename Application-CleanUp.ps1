@@ -55,7 +55,7 @@ foreach ($a in $apps) {
 
     # Create a new appitem with the summarized data for simple output
     $appitem = New-Object app
-    # $appitem = New-Object app -Property @{vin=1234;year="1/1/2015";model="z-4";color=1;Make=5}
+    # $appitem = New-Object app -Property @{Id=$oneapp.ObjectId;DisplayName=$oneapp.DisplayName;ApplicationId=$oneapp.ApplicationId;...}
 
     $appitem.Id = $oneapp.ObjectId
     $appitem.DisplayName = $oneapp.DisplayName
