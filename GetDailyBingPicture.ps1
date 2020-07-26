@@ -25,7 +25,7 @@ $filename = $body.images[0].startdate+"-"+$body.images[0].title.Replace(" ","-")
 # Download the picture to %APPDATA%\Microsoft\Teams\Backgrounds\Uploads
 # $filepath = $env:APPDATA+"\Microsoft\Teams\Backgrounds\Uploads\"+$filename
 # or to a local folder...
-$filepath = ".\"+$filename
+$filepath = "C:\Users\Toni\OneDrive - atwork gmbh\Pictures\Bing\"+$filename
 Invoke-WebRequest -Method Get -Uri $fileurl -OutFile $filepath
 
 # Show the generated picture filepath
