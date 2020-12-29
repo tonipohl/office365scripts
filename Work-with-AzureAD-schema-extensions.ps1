@@ -34,6 +34,9 @@ Get-MgSchemaExtension -All
 #-------------------------------------
 # Create a new schema extension
 #-------------------------------------
+# Use the Azure AD app ID:
+$appid = "<your-appid>"
+
 # We create a new, empty ArrayList
 $SchemaProperties = New-Object -TypeName System.Collections.ArrayList
 
@@ -56,7 +59,7 @@ $SchemaExtension = New-MgSchemaExtension -TargetTypes  @('User') `
     -Properties $SchemaProperties `
     -Id 'myapp1' `
     -Description 'my organization additional user properties' `
-    -Owner "992cc0fe-1c66-478e-8c67-2846dee6d149" 
+    -Owner $appid 
 
 
 #-------------------------------------
@@ -80,7 +83,7 @@ $SchemaProperties.Add($prop3)
 # Update the schem extension with a) the full schema properties list and b) the owner!
 Update-MgSchemaExtension -SchemaExtensionId $SchemaExtension.Id `
     -Properties $SchemaProperties `
-    -Owner "992cc0fe-1c66-478e-8c67-2846dee6d149" 
+    -Owner $appid 
 
 #-------------------------------------
 # Set the status to Available
@@ -88,7 +91,7 @@ Update-MgSchemaExtension -SchemaExtensionId $SchemaExtension.Id `
 #-------------------------------------
 # Update-MgSchemaExtension -SchemaExtensionId $SchemaExtension.Id `
 #     -Status 'Available' `
-#     -Owner "992cc0fe-1c66-478e-8c67-2846dee6d149" 
+#     -Owner $appid 
 
 # Check again
 Get-MgSchemaExtension -SchemaExtensionId $SchemaExtension.Id | fl
